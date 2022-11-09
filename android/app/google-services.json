@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017432958082",
+    "project_id": "development-project-655da",
+    "storage_bucket": "development-project-655da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017432958082:android:99ed2f418b28cf2fa2409b",
+        "android_client_info": {
+          "package_name": "com.example.voltage_lab_bd_job_circular"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017432958082-ldclvteetoogpv6kcbupongrrdmi2ogb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtfnTTFvd-sOFR_Kt7DmqdLqkGSJ0E2_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017432958082-ldclvteetoogpv6kcbupongrrdmi2ogb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
