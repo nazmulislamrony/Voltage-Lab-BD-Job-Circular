@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:voltage_lab_bd_job_circular/home_init_page.dart';
 class Slash extends StatefulWidget {
   const Slash({Key? key}) : super(key: key);
 
@@ -11,8 +13,8 @@ class Slash extends StatefulWidget {
 
 class _SlashState extends State<Slash> {
   late StreamSubscription subscription;
-  bool hasInternet=true;
-  // ConnectivityResult result=ConnectivityResult.none;
+  bool hasInternet=false;
+
   void initState(){
     subscription = Connectivity().onConnectivityChanged.listen(( result) {
     setState(() {
@@ -28,11 +30,7 @@ class _SlashState extends State<Slash> {
     subscription.cancel();
     super.dispose();
   }
-  // void internetcheck(){
-  //   AlertDialog(
-  //     title: Text("On Internet connection"),
-  //   );
-  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +45,18 @@ class _SlashState extends State<Slash> {
             SizedBox(
               height: 90,
             ),
-            hasInternet? CircularProgressIndicator():Text("NO INTERNET"),
+            hasInternet?Text("NO INTERNET"):navigator(),
           ],
 
         ),
       ),
     );
+  }
+   navigator(){
+   SchedulerBinding.instance.addPostFrameCallback((_) {
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home_init_page()));
+   }
+   );
+
   }
 }

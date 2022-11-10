@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voltage_lab_bd_job_circular/home_init_page.dart';
 import 'package:voltage_lab_bd_job_circular/provider/Database_provider.dart';
 import 'package:voltage_lab_bd_job_circular/slash.dart';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Slash(),
+          home: home_init_page(),
         ));
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,

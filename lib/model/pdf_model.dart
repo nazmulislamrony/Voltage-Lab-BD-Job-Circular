@@ -1,6 +1,6 @@
 class pdfMoled_class{
-  String? pdf;
-  int? counter;
+  String? url;
+  String? name;
 
-  pdfMoled_class({this.pdf, this.counter});
+  pdfMoled_class({this.url, this.name});
 }
