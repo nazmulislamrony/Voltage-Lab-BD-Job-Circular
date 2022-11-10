@@ -42,6 +42,8 @@ dependencies:
   intl: ^0.17.0
   firebase_core_platform_interface: 4.5.1
   connectivity_plus: ^3.0.2
+  group_radio_button: ^1.2.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

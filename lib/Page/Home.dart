@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:voltage_lab_bd_job_circular/Page/items_list.dart';
 import 'package:voltage_lab_bd_job_circular/model/pdf_model.dart';
 import 'package:voltage_lab_bd_job_circular/provider/Database_provider.dart';
+import 'package:voltage_lab_bd_job_circular/theme/ThemePage.dart';
 import 'package:voltage_lab_bd_job_circular/widget/Custom_gride_view_builder.dart';
 import '../widget/Custom_Header.dart';
 class Home extends StatefulWidget {
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
                 }else if(value == 3){
                   print("Settings menu is selected.");
                 }else if(value == 4){
-                  print("Settings menu is selected.");
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingsPage()));
                 }
               }
           ),
