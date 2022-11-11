@@ -109,8 +109,8 @@ class Pdf_Provider extends ChangeNotifier{
         snapShot.docChanges.forEach((element) {
 
           pdfMoled_class productModels = pdfMoled_class(
-            url:element.doc['name'],
-            // name:element.doc['name'],
+            // url:element.doc['name'],
+             name:element.doc['name'],
           );
           sub_Pdf_productlist.add(productModels);
         });
