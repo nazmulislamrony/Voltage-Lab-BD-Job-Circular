@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:voltage_lab_bd_job_circular/Page/items_list.dart';
 import 'package:voltage_lab_bd_job_circular/model/pdf_model.dart';
 import 'package:voltage_lab_bd_job_circular/provider/Database_provider.dart';
@@ -14,7 +15,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void postshare(BuildContext context, String link) async {
+    final String text = link;
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    await Share.share(text,
+        subject: "Voltage Lab",
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
   List <pdfMoled_class> CategorytList=[];
+  List <pdfMoled_class> SubCategorytList=[];
+  // List <pdfMoled_class> SubCategorytList=[];
   int count=0;
   void _custominitState(Category){
     setState(() {
@@ -22,7 +33,9 @@ class _HomeState extends State<Home> {
     }
     );
     CategorytList=Category.CategoryList;
-    Category.getCategory('data');
+    SubCategorytList=Category.subCategoryList;
+    Category.getCategory();
+    Category.getSubCategory();
   }
   @override
   Widget build(BuildContext context) {
@@ -32,7 +45,9 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("BD ALL Job",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.share)),
+          IconButton(onPressed: (){
+            postshare(context,"www.facebook.com");
+          }, icon: Icon(Icons.share)),
           PopupMenuButton(
               itemBuilder: (context){
                 return [
@@ -75,39 +90,66 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
+      body:
+        Padding(
           padding: EdgeInsets.all(10),
-          child:Column(
-            children: [
-              custom_herderText("চাকরির বিজ্ঞপ্তি", Icon(Icons.card_giftcard_outlined,size: 30,),),
-              Custrom_Gridview( Category.CategoryList.length ,110.0, custom_design ),
-              SizedBox(height: 10,),
-              custom_herderText("চাকরির বিজ্ঞপ্তি", Icon(Icons.card_giftcard_outlined,size: 30,),),
-              Custrom_Gridview(Category.CategoryList.length,110.0, custom_design ),
-              SizedBox(height: 10,),
-              custom_herderText("চাকরির বিজ্ঞপ্তি", Icon(Icons.card_giftcard_outlined,size: 30,),),
-              Custrom_Gridview(Category.CategoryList.length,110.0, custom_design ),
-              SizedBox(height: 10,),
-              custom_herderText("চাকরির বিজ্ঞপ্তি", Icon(Icons.card_giftcard_outlined,size: 30,),),
-              Custrom_Gridview(Category.CategoryList.length,110.0, custom_design ),
-              SizedBox(height: 10,),
-              custom_herderText("চাকরির বিজ্ঞপ্তি", Icon(Icons.card_giftcard_outlined,size: 30,),),
-              Custrom_Gridview(Category.CategoryList.length,110.0, custom_design ),
-              SizedBox(height: 10,),
-            ],
-          ) ,
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: CategorytList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Icon(Icons.card_giftcard_outlined),
+                                SizedBox(width: 10,),
+                                Text("${CategorytList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+                              ],
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              height:110,
+                              child: GridView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: SubCategorytList.length,
+                                physics: BouncingScrollPhysics(),
+                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    // childAspectRatio: 2/1.5,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 8),
+                                itemBuilder: (context, index) {
+                                  return custom_design(index,);
+                                },
+                              ),
+                            )
+
+                          ],
+                        );
+                      }),
+                )
+              ],
+            ),
+          ),
         )
-      ),
+
     );
   }
   Widget custom_design(int index){
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>items_list(
-          url:CategorytList[index].url ,
-        )));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=>items_list(
+        //   url:CategorytList[index].url ,
+        // )));
       },
       child: Container(
         color: Colors.blueGrey,
@@ -122,7 +164,7 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 7,
             ),
-            Text("${CategorytList[index].name}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
+            Text("${SubCategorytList[index].name}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
           ],
         ),
       ) ,
