@@ -4,12 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:voltage_lab_bd_job_circular/model/pdf_model.dart';
 class Pdf_Provider extends ChangeNotifier{
 
-  pdfMoled_class _PDf_model=pdfMoled_class();
-  List<pdfMoled_class> _Pdf_productlist=[];
-  List<pdfMoled_class> sub_Pdf_productlist=[];
-  pdfMoled_class get pdf_model => _PDf_model;
-  List<pdfMoled_class> get CategoryList => _Pdf_productlist;
-  List<pdfMoled_class> get subCategoryList => sub_Pdf_productlist;
+  CategoryClass _categoryModel=CategoryClass();
+  List<CategoryClass> _CategoryList=[];
+  List<CategoryClass> _subCategoryList=[];
+  CategoryClass get CategoryModel => _categoryModel;
+  List<CategoryClass> get CategoryList => _CategoryList;
+  List<CategoryClass> get subCategoryList => _subCategoryList;
 
 
 
@@ -18,8 +18,8 @@ class Pdf_Provider extends ChangeNotifier{
 
 
 
-  set Ecommerce_model(pdfMoled_class value) {
-    _PDf_model = value;
+  set CategoryModel(CategoryClass value) {
+    _categoryModel = value;
     notifyListeners();
   }
 
@@ -41,60 +41,42 @@ class Pdf_Provider extends ChangeNotifier{
   Future<void> getdata()async{
     CollectionReference ref= FirebaseFirestore.instance.collection("Parent");
      ref.doc("9K9g8kbpA60kzIHJT4HQ").collection("childdata").get().then((value){
-       sub_Pdf_productlist.clear();
-       print("Length: " + sub_Pdf_productlist.length.toString());
+       _subCategoryList.clear();
+       print("Length: " + _subCategoryList.length.toString());
        value.docChanges.forEach((element) {
-         pdfMoled_class productModels = pdfMoled_class(
+         CategoryClass productModels = CategoryClass(
            name:element.doc['name'],
          );
-         sub_Pdf_productlist.add(productModels);
+         _subCategoryList.add(productModels);
        });
-       print("Length: " + sub_Pdf_productlist.length.toString());
+       print("Length: " + _subCategoryList.length.toString());
        notifyListeners();
     });
   }
 
 
 
-  // Future<void> getSubCollection() async {
-  //   try {
-  //    await  FirebaseFirestore.instance.collection("Parent")
-  //     .get().
-  //     then((snapShot) {
-  //      _Pdf_productlist.clear();
-  //      print("Length: " + _Pdf_productlist.length.toString());
-  //       snapShot.docChanges.forEach((element) {
-  //           pdfMoled_class productModels = pdfMoled_class(
-  //             name:element.doc['parent'],
-  //           );
-  //           _Pdf_productlist.add(productModels);
-  //       });
-  //           print("Length: parent" + _Pdf_productlist.length.toString());
-  //
-  //
-  //           FirebaseFirestore.instance.collectionGroup("childdata").where('id', isEqualTo: '1')
-  //           .get()
-  //           .then((value) {
-  //                 sub_Pdf_productlist.clear();
-  //                 print("Length: " + sub_Pdf_productlist.length.toString());
-  //             value.docChanges.forEach((element) {
-  //                     pdfMoled_class productModels = pdfMoled_class(
-  //                       // url:element.doc['name'],
-  //                       name:element.doc['name'],
-  //                     );
-  //                     sub_Pdf_productlist.add(productModels);
-  //                     print("Length: child " + sub_Pdf_productlist.length.toString());
-  //                     notifyListeners();
-  //             });
-  //           });
-  //     });
-  //
-  //    print("Length: " + _Pdf_productlist.length.toString());
-  //
-  //   } catch (error) {
-  //     error.toString();
-  //   }
-  // }
+  Future<void> getSubCollection() async {
+    try {
+       await FirebaseFirestore.instance.collection("Parent").get().then((value) {
+        value.docs.forEach((element) {
+          FirebaseFirestore.instance.collection("Parent").doc(element.id).collection("childdata").get().then((value) {
+            value.docs.forEach((element) {
+              print(element.data());
+            });
+          });
+        });
+       });
+
+
+
+
+     print("Length: " + _CategoryList.length.toString());
+
+    } catch (error) {
+      error.toString();
+    }
+  }
 
 
   Future<void> getSubCategory(
@@ -104,19 +86,19 @@ class Pdf_Provider extends ChangeNotifier{
       await FirebaseFirestore.instance.collectionGroup("childdata")
           .get()
           .then((snapShot) {
-        sub_Pdf_productlist.clear();
-        print("Length: " + sub_Pdf_productlist.length.toString());
+        _subCategoryList.clear();
+        print("Length: " + _subCategoryList.length.toString());
         snapShot.docChanges.forEach((element) {
-          pdfMoled_class productModels = pdfMoled_class(
-            url:element.doc['name'],
+          CategoryClass productModels = CategoryClass(
+            name:element.doc['name'],
             //  name:element.doc['books'],
           );
-          sub_Pdf_productlist.add(productModels);
+          _subCategoryList.add(productModels);
 
         });
 
       });
-      print("Length: " + sub_Pdf_productlist.length.toString());
+      print("Length: " + _subCategoryList.length.toString());
       notifyListeners();
     } catch (error) {
       error.toString();
@@ -132,19 +114,19 @@ class Pdf_Provider extends ChangeNotifier{
       await FirebaseFirestore.instance.collection("Parent")
           .get()
           .then((snapShot) {
-        _Pdf_productlist.clear();
-        print("Length: " + _Pdf_productlist.length.toString());
+        _CategoryList.clear();
+        print("Length: " + _CategoryList.length.toString());
         snapShot.docChanges.forEach((element) {
 
-          pdfMoled_class productModels = pdfMoled_class(
+          CategoryClass productModels = CategoryClass(
             name:element.doc['parent'],
               // name:element.doc['name'],
           );
-          _Pdf_productlist.add(productModels);
+          _CategoryList.add(productModels);
         });
 
       });
-      print("Length: " + _Pdf_productlist.length.toString());
+      print("Length: " + _CategoryList.length.toString());
       notifyListeners();
     } catch (error) {
       error.toString();

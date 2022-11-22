@@ -32,8 +32,8 @@ class _HomeState extends State<Home> {
     preferences.remove('email');
   }
 
-  List <pdfMoled_class> CategorytList=[];
-  List <pdfMoled_class> SubCategorytList=[];
+  List <CategoryClass> CategorytList=[];
+  List <CategoryClass> SubCategorytList=[];
 
   int count=0;
   void _custominitState(Category){
@@ -45,6 +45,7 @@ class _HomeState extends State<Home> {
     SubCategorytList=Category.subCategoryList;
     Category.getCategory();
     Category.getSubCategory();
+    Category.getSubCollection();
   }
   @override
   Widget build(BuildContext context) {

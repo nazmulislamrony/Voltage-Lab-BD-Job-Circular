@@ -1,6 +1,6 @@
-class pdfMoled_class{
+class CategoryClass{
   String? url;
   String? name;
 
-  pdfMoled_class({this.url, this.name});
+  CategoryClass({this.url, this.name});
 }
