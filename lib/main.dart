@@ -62,8 +62,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: themeProvider.getTheme,
       debugShowCheckedModeBanner: false,
-      home:widget.email== null?LoginPage():Home(),
+      home:Home(),
+      // home:widget.email== null?LoginPage():Home(),
     );
   }
 }
-//djkfdfjkdjf
