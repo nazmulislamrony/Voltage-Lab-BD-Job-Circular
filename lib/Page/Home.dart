@@ -1,12 +1,13 @@
+
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:voltage_lab_bd_job_circular/Page/items_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voltage_lab_bd_job_circular/model/pdf_model.dart';
 import 'package:voltage_lab_bd_job_circular/provider/Database_provider.dart';
 import 'package:voltage_lab_bd_job_circular/theme/ThemePage.dart';
-import 'package:voltage_lab_bd_job_circular/widget/Custom_gride_view_builder.dart';
-import '../widget/Custom_Header.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -15,6 +16,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  final database=FirebaseDatabase.instance.ref();
+
+
   void postshare(BuildContext context, String link) async {
     final String text = link;
     final RenderBox box = context.findRenderObject() as RenderBox;
@@ -22,10 +27,14 @@ class _HomeState extends State<Home> {
         subject: "Voltage Lab",
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
+  void logout()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove('email');
+  }
 
   List <pdfMoled_class> CategorytList=[];
   List <pdfMoled_class> SubCategorytList=[];
-  // List <pdfMoled_class> SubCategorytList=[];
+
   int count=0;
   void _custominitState(Category){
     setState(() {
@@ -39,7 +48,9 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
+    final dailyspecialRef=database.child("category");
     final Pdf_Provider Category = Provider.of<Pdf_Provider>(context);
+
     if(count==0) _custominitState(Category);
     return Scaffold(
       appBar: AppBar(
@@ -80,9 +91,9 @@ class _HomeState extends State<Home> {
                 }else if(value == 1){
                   print("Settings menu is selected.");
                 }else if(value == 2){
-                  print("Settings menu is selected.");
+
                 }else if(value == 3){
-                  print("Settings menu is selected.");
+                  logout();
                 }else if(value == 4){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingsPage()));
                 }
@@ -111,23 +122,35 @@ class _HomeState extends State<Home> {
                               children: [
                                 Icon(Icons.card_giftcard_outlined),
                                 SizedBox(width: 10,),
-                                Text("${CategorytList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+                                Text("${Category.CategoryList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
                               ],
                             ),
+
+                            // ListView.builder(
+                            //     physics: BouncingScrollPhysics(),
+                            //     shrinkWrap: true,
+                            //     scrollDirection: Axis.vertical,
+                            //     itemCount: CategorytList.length,
+                            //     prototypeItem: Text("${Category.CategoryList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                            //     itemBuilder:(BuildContext context, int index){
+                            // //       return Text("${index}");
+                            // //     }
+                            // // )
+
                             SizedBox(
                               width: double.infinity,
                               height:110,
                               child: GridView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: SubCategorytList.length,
+                                itemCount:SubCategorytList.length,
                                 physics: BouncingScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                                     maxCrossAxisExtent: 200,
                                     // childAspectRatio: 2/1.5,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 8),
                                 itemBuilder: (context, index) {
-                                  return custom_design(index,);
+                                  return custom_design(index);
                                 },
                               ),
                             )
@@ -135,7 +158,7 @@ class _HomeState extends State<Home> {
                           ],
                         );
                       }),
-                )
+                ),
               ],
             ),
           ),
@@ -146,28 +169,30 @@ class _HomeState extends State<Home> {
   Widget custom_design(int index){
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: (){
-        // Navigator.push(context, MaterialPageRoute(builder: (context)=>items_list(
-        //   url:CategorytList[index].url ,
-        // )));
-      },
-      child: Container(
-        color: Colors.blueGrey,
-        child: Column(
-          children: [
-        ClipRRect(
-        child: Image.asset("images/bd_job_circular.png",
-          height: size.height*0.11,
-          width: double.maxFinite,
-          fit: BoxFit.fill,
-        )),
-            SizedBox(
-              height: 7,
-            ),
-            Text("${SubCategorytList[index].name}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
-          ],
-        ),
-      ) ,
+        onTap: (){
+          // Navigator.push(context, MaterialPageRoute(builder: (context)=>items_list(
+          //   url:CategorytList[index].url ,
+          // )));
+        },
+        child: Container(
+          color: Colors.blueGrey,
+          child: Column(
+            children: [
+              ClipRRect(
+                  child: Image.asset("images/bd_job_circular.png",
+                    height: size.height*0.11,
+                    width: double.maxFinite,
+                    fit: BoxFit.fill,
+                  )),
+              SizedBox(
+                height: 7,
+              ),
+              Text("${SubCategorytList[index].name}",style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
+            ],
+          ),
+        ) ,
+
+
     );
   }
 }

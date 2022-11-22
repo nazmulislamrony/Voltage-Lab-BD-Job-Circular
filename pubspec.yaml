@@ -45,6 +45,10 @@ dependencies:
   group_radio_button: ^1.2.0
   shared_preferences: ^2.0.15
   share: ^2.0.4
+  firebase_auth: ^3.3.9
+  pinput: ^2.2.16
+
+
 
 dev_dependencies:
   flutter_test:

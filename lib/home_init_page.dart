@@ -12,7 +12,6 @@ class home_init_page extends StatefulWidget {
 class _home_init_pageState extends State<home_init_page> {
   int _currentIndex = 1;
   final List screens = [
-
     profile(),
     Home(),
     online_test(),
