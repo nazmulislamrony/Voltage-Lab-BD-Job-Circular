@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voltage_lab_bd_job_circular/login_Section/registation.dart';
 import 'package:voltage_lab_bd_job_circular/widget/from_decoration.dart';
 
-import '../Page/Home.dart';
+
 import '../provider/AuthProvider.dart';
 import 'ForgetPasswort.dart';
 class LoginPage extends StatefulWidget {
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                         await authProider.signIn("${authProider.usersModel.Email}","${authProider.usersModel.Password}" );
                         SharedPreferences preferences = await SharedPreferences.getInstance();
                         preferences.setString('email', "${authProider.usersModel.Email}");
-                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>Home()));
+                         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>Home()));
                       }catch(e){
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(

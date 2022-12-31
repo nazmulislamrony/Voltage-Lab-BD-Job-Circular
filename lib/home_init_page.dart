@@ -1,23 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:voltage_lab_bd_job_circular/Page/Home.dart';
-import 'package:voltage_lab_bd_job_circular/Page/online_test.dart';
-import 'package:voltage_lab_bd_job_circular/Page/profile.dart';
+import 'package:voltage_lab_bd_job_circular/screen/home_screen.dart';
+import 'package:voltage_lab_bd_job_circular/screen/online_test_screen.dart';
+import 'package:voltage_lab_bd_job_circular/screen/profile_screen.dart';
+
+
+import 'model/categorymodel.dart';
 class home_init_page extends StatefulWidget {
-  const home_init_page({Key? key}) : super(key: key);
+
+  // Categorymodels categorylist;
+  // final Categorymodels categorylist;
 
   @override
   State<home_init_page> createState() => _home_init_pageState();
+
+  // home_init_page( this.categorylist);
 }
 
 class _home_init_pageState extends State<home_init_page> {
   int _currentIndex = 1;
   final List screens = [
-    profile(),
-    Home(),
-    online_test(),
+    profileScreen(),
+    HomeScreen(),
+    OnlineTestScreen(),
   ];
+
+  // static get categorylist => Categorymodels;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class online_test extends StatefulWidget {
-  const online_test({Key? key}) : super(key: key);
+class OnlineTestScreen extends StatefulWidget {
+  const OnlineTestScreen({Key? key}) : super(key: key);
 
   @override
-  State<online_test> createState() => _online_testState();
+  State<OnlineTestScreen> createState() => _OnlineTestScreenState();
 }
 
-class _online_testState extends State<online_test> {
+class _OnlineTestScreenState extends State<OnlineTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:voltage_lab_bd_job_circular/Page/Home.dart';
+
 
 import 'ForgetPasswort.dart';
 class otpVerification extends StatefulWidget {
@@ -115,7 +115,7 @@ class _otpVerificationState extends State<otpVerification> {
                         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: forgetPasswort.verify, smsCode: code);
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
+                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(
                               'verification successfully',

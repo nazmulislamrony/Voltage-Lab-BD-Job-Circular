@@ -5,10 +5,11 @@ import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:voltage_lab_bd_job_circular/login_Section/login.dart';
 import 'package:voltage_lab_bd_job_circular/provider/AuthProvider.dart';
 import 'package:voltage_lab_bd_job_circular/provider/Database_provider.dart';
+import 'package:voltage_lab_bd_job_circular/slash.dart';
 import 'package:voltage_lab_bd_job_circular/theme/ThemeProvider.dart';
 import 'package:voltage_lab_bd_job_circular/theme/themeColor.dart';
 
-import 'Page/Home.dart';
+import 'home_init_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,7 @@ void main() async{
     }
     runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Pdf_Provider()),
+        ChangeNotifierProvider(create: (context) => Category_provider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider(activeTheme)),
       ],
@@ -51,10 +52,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
 
-  void checklogin()async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var email = preferences.getString('email');
-  }
 
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -62,8 +59,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: themeProvider.getTheme,
       debugShowCheckedModeBanner: false,
-      home:Home(),
-      // home:widget.email== null?LoginPage():Home(),
+       home:home_init_page(),
+       // home:widget.email== null?LoginPage():home_init_page(),
     );
   }
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../widget/Custom_Header.dart';
-class profile extends StatefulWidget {
-  const profile({Key? key}) : super(key: key);
+class profileScreen extends StatefulWidget {
+  const profileScreen({Key? key}) : super(key: key);
 
   @override
-  State<profile> createState() => _profileState();
+  State<profileScreen> createState() => _profileScreenState();
 }
 
-class _profileState extends State<profile> {
+class _profileScreenState extends State<profileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
